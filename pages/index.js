@@ -5,23 +5,35 @@ import Footer from '../comp/Footer'
 
 
 function Home(props){
+  // let arr=[]
+  // var x = Math.floor((Math.random() * 10) + 1);
+  var arr = [];
+  while(arr.length < 10){
+    var r = Math.floor(Math.random() * 2370) + 1;
+    if(arr.indexOf(r) === -1) arr.push(r);
+  }
+  
+ 
 
   return(
     <>
+    <main>
     <Header />
-    <h1>Mohammed Ghafri</h1>
-    <p>{props.comic}</p>
-    <Footer />
+    <h1>XKCD</h1>
+    <img src={props.comic.img} />
+    <p>Previouse 10</p>
+    </main>
+    <Footer single={arr}/>
     </>
   )
 }
 
 
 export async function getServerSideProps(){
-  const res = await fetch('https://www.superheroapi.com/api.php/1716079841891014/1')
+  const res = await fetch('https://xkcd.com/info.0.json')
   const myData = await res.json();
   console.log(myData)
-  return {props:{comic: myData.biography}};
+  return {props:{comic: myData}};
 }
 
 
